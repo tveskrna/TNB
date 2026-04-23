@@ -72,6 +72,6 @@ public class LocalKafka extends Kafka implements ContainerDeployable<StrimziCont
     }
 
     public String defaultImage() {
-        return "registry.redhat.io/amq-streams/kafka-36-rhel9:2.7.0-17";
+        return "registry.redhat.io/amq-streams/kafka-41-rhel9:3.1.0-16";
     }
 }
