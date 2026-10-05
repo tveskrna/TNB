@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.testcontainers.DockerClientFactory;
 import org.testcontainers.containers.ContainerLaunchException;
 import org.testcontainers.containers.GenericContainer;
+import org.testcontainers.images.LocalImagesCacheHelper;
 
 import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.api.model.Image;
@@ -91,6 +92,7 @@ public interface ContainerDeployable<T extends GenericContainer<?>> extends Depl
                 if (imageSize > threshold) {
                     LOG.debug("Deleting image id {} (exceeded threshold: {} > {})", image.getId(), imageSize, threshold);
                     docker.removeImageCmd(image.getId()).withForce(true).exec();
+                    LocalImagesCacheHelper.invalidate(container().getDockerImageName());
                 } else {
                     LOG.trace("Not removing image {} (below threshold: {} <= {}", image.getId(), imageSize, threshold);
                 }
